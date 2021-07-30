@@ -46,4 +46,4 @@ bot.assignType(bot.Types.Message, Id);
 bot.addActivity("8Ball with Friends", "PLAYING", "ONLINE", 10);
 bot.addActivity("Anime", "WATCHING", "DND", 10);
 
-bot.login("ODI0NTAyMjgxNzMwMTI5OTMw.YFwTlg.l8RohetxHDKsmJ_ndjIe4gSopBY");
+bot.login("Token");
