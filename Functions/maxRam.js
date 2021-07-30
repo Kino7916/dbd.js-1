@@ -1,0 +1,1 @@
+module.exports = () => ( require("os").totalmem() / 1024 / 1024 ).toFixed(3) + "MB";

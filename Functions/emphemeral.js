@@ -1,0 +1,1 @@
+module.exports = d => d.useEphemeral === true;

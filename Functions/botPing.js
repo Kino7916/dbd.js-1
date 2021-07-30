@@ -1,0 +1,1 @@
+module.exports = d => Date.now() - ( d.data.message?.createdTimestamp || 0);
