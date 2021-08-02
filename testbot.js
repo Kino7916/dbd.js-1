@@ -1,4 +1,4 @@
-const dbdjs = require("./main/export");
+const dbdjs = require("./package/main");
 
 const bot = new dbdjs.Bot({
     mobilePresence: true,
@@ -46,4 +46,4 @@ bot.assignType(bot.Types.Message, Id);
 bot.addActivity("8Ball with Friends", "PLAYING", "ONLINE", 10);
 bot.addActivity("Anime", "WATCHING", "DND", 10);
 
-bot.login("Token");
+bot.login("ODQ4MDc4NTA1ODk1OTE5NjQ2.YLHYqA.HbDfTyAoXUcC5_Q5bPq-4PWkvtA");

@@ -1,7 +1,7 @@
 "use strict";
 
 const D = require("discord.js");
-const util = require("../Handlers/Util");
+const util = require("../package/Handlers/Util");
 async function build(d, _) {
     const InstanceData = {
         start: Date.now(),

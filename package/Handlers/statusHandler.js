@@ -7,7 +7,7 @@
  * @param {import("../main/Client")} This
  */
 function statusHandler(Activities, This) {
-    const Arr = Activities.array();
+    const Arr = Array.from(Activities.values());
     if (!Arr.length || Arr.length < 1) return;
     if (Arr.length === 1) {
         const status = Arr[0];

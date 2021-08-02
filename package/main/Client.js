@@ -3,7 +3,6 @@ const connectDBH = require("../Handlers/danbotHosting");
 const statusHandler = require("../Handlers/statusHandler");
 const ActivityTypes = ["PLAYING", "STREAMING", "WATCHING", "LISTENING", "CUSTOM", "COMPETING", "LISTENING"];
 const Statuses = ["ONLINE", "INVISIBLE", "IDLE", "DND"];
-const Events = require("fs").readdirSync(require("path").resolve("./Events")).map(v => v.slice(0, v.length - 3));
 const resolveError = require("../Compiler/resolveError");
 const resolveMessage = require("../Compiler/resolveMessage");
 const Database = require("./Database");
@@ -11,9 +10,10 @@ const Database = require("./Database");
 // Alpha version
 // just in case if they're lazy
 const Alpha_Events = require("./ALPHA_Types");
+const Events = Object.values(Alpha_Events);
 
-function runEvent(event, This) {
-    return require("../Events/" + event + ".js")(This);
+function runEvent(event) {
+    return require("../Events/" + event + ".js")();
 }
 
 
@@ -77,20 +77,19 @@ class Script {
         }
         
         this.client = new (class _CL_EXTENDED extends Discord.Client {})(this.options);
-        const _client = this.client;
-        const _this = this;
-        this.client.once("ready", function () {
+        this.client.dbdjsProgram = this;
+        this.client.once("ready", function (client) {
             
             console.log(`Connected to Discord bot, Details:
-    Username: ${_client.user.username}
-    ID: ${_client.user.id}
+    Username: ${client.user.username}
+    ID: ${client.user.id}
 `)
-            console.log("Starting up STATUS_HANDLER...");
-            statusHandler(_this.options.status, _this);
+            console.log("Running STATUS_HANDLER...");
+            statusHandler(client.dbdjsProgram.options.status, client.dbdjsProgram);
             console.log("Discord.js client Initialized and is ready!");
             if (clientOptions.danbotHostingKey) {
                 console.log("Initializing Danbot Hosting API...")
-                connectDBH(clientOptions.danbotHostingKey, _client);
+                connectDBH(clientOptions.danbotHostingKey, client);
             }
             
             console.log(`Process finished, takes ${Date.now() - _s}ms`);
@@ -104,7 +103,7 @@ class Script {
      */
     enableEvent(event) {
         if (!Events.includes(event)) throw new TypeError(`Unsupported event of "${event}"!`);
-        this.client.on(event, runEvent(event, this));
+        this.client.on(event, runEvent(event));
     }
 
     /**
